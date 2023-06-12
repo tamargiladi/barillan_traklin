@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "firebase": "^9.22.2",
+    "harp": "^0.46.1",
+    "live-server": "^1.2.2"
+  }
+}
