@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()">
+    <div class="form-container" *ngFor="let field of fields">
+        <div class="label-container">
+            <label style="padding-right: 20px;">{{ field.label }}</label>
+            <input style="padding: 10px;"
+              type="{{ field.type }}"
+              [name]="field.name"
+              [(ngModel)]="field.value"
+              [required]="field.required"
+            >
+        </div>
+    </div>
+    <div style="margin-left: 40px">
+        <button  type="submit">Submit</button></div>
+  </form>
