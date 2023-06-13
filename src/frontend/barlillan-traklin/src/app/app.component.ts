@@ -27,39 +27,39 @@ export class AppComponent {
     required: true,
     options:  [
       {
-        label:  "Science",
+        label:  "מדעים מדוייקים",
         value: "Science",
       },
       {
-        label: "Art",
+        label: "מדעי החיים",
         value: "Art",
       },
       {
-        label: "Engineering",
+        label: "הנדסה",
         value: "Engineering",
       },
       {
-        label: "Judaism",
+        label: "יהדות",
         value: "Judaism",
       },
       {
-        label: "Social",
+        label: "מדעי החברה",
         value: "Social",
       },
       {
-        label: "Education",
+        label: "חינוך",
         value: "Education",
       },
       {
-        label: "Medicine",
+        label: "רפואה",
         value: "Medicine",
       },
       {
-        label: "Managment",
+        label: "הנהלה בכירה",
         value: "Managment",
       },
       {
-        label: "Humanities",
+        label: "מדעי הרוח",
         value: "Humanities",
       }
     ]},
