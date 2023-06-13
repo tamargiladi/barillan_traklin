@@ -1,15 +1,31 @@
 <form (ngSubmit)="onSubmit()">
-    <div class="form-container" *ngFor="let field of fields">
-        <div class="label-container">
-            <label style="padding-right: 20px;">{{ field.label }}</label>
-            <input style="padding: 10px;"
-              type="{{ field.type }}"
-              [name]="field.name"
-              [(ngModel)]="field.value"
-              [required]="field.required"
-            >
+    <div class="form-container-box">
+        <div class="form-container" *ngFor="let field of fields">
+            <div class="label-container">
+                <label style="padding-right: 20px;">{{ field.label }}</label>
+                <ng-container  *ngIf="field.type !== 'select'">
+                <input style="padding: 10px;"
+                  type="{{ field.type }}"
+                  [name]="field.name"
+                  [(ngModel)]="field.value"
+                  [required]="field.required"
+                >
+            </ng-container>
+            <ng-container *ngIf="field.type === 'select'">
+                <select (ngModelChange)="changeSelect($event)" style="padding: 10px;" [name]="field.name" [(ngModel)]="field.value" [required]="field.required">
+                  <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+                </select>
+              </ng-container>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; padding-bottom: 40px;">
+            <button style=" margin-top: 30px; padding: 16px; font-size: 28px;font-weight
+            :600;background-color: #16313b; border: none;color:white; cursor:pointer;" type="submit">שלח</button>
         </div>
     </div>
-    <div style="margin-left: 40px">
-        <button  type="submit">Submit</button></div>
+  
   </form>
+
+  <div *ngIf="isError" class="error" style="color:red;flex-direction: row;justify-content: center; text-align: center; padding-top: 100px;">
+    {{errorMessage}}
+  </div> 

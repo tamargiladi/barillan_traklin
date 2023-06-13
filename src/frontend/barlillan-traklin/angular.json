@@ -99,7 +99,12 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/barlillan-traklin",
+            "netlifyToken": "noqkGRMdJTUgYo0H5HWVgFjd5AioRoTRnV5WW7dvPwk",
+            "siteId": "e5353b1d-6dc5-4d21-97b4-b517cab11c5f"
+          }
         }
       }
     }

@@ -10,15 +10,7 @@ export class AppComponent {
   title = 'barlillan-traklin';
   
   constructor(private tableService: TableService) {
-    this.tableService.getAllFaculties().subscribe((c)=>{
-      let cObj: any = c;
-      console.log('cObj:', cObj.data);
-      cObj.data.forEach((d: any) => {
-        
-        d.count = Number(d.count);
-      })
-        console.log('c:',c);
-    });
+
   }
 
 
@@ -33,5 +25,53 @@ export class AppComponent {
     name: 'Faculty',
     type: 'select',
     required: true,
-  }]
+    options:  [
+      {
+        label:  "Science",
+        value: "Science",
+      },
+      {
+        label: "Art",
+        value: "Art",
+      },
+      {
+        label: "Engineering",
+        value: "Engineering",
+      },
+      {
+        label: "Judaism",
+        value: "Judaism",
+      },
+      {
+        label: "Social",
+        value: "Social",
+      },
+      {
+        label: "Education",
+        value: "Education",
+      },
+      {
+        label: "Medicine",
+        value: "Medicine",
+      },
+      {
+        label: "Managment",
+        value: "Managment",
+      },
+      {
+        label: "Humanities",
+        value: "Humanities",
+      }
+    ]},
+{
+  label: 'תאריך ושעה',
+  name: 'Time',
+  type: 'select',
+  required: true,
+  options: [{
+    label: '06/07'
+  }
+]
+}]
+
 }
