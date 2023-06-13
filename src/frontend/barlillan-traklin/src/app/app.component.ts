@@ -69,7 +69,7 @@ export class AppComponent {
   type: 'select',
   required: true,
   options: [{
-    label: '06/07'
+    label: '06/07',
   }
 ]
 }]

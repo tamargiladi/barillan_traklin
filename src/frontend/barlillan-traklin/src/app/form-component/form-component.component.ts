@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { a } from 'src/server/parser.service';
 import { TableService } from '../services/table.service';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-form-component',
@@ -15,6 +15,7 @@ export class GenericFormComponent {
   isError: boolean = false;
   errorMessage = '';
   objectFaculties: any;
+  notCompleted = true;
   constructor(private tableService: TableService) {
     this.tableService.getAllFaculties().subscribe((c)=>{
       let cObj: any = c;
@@ -55,6 +56,8 @@ iterateOver(field: any) {
       const idName: number = this.getRowIdByNameOfFaculty(field.Name_of_Faculty);
       obs$ = this.tableService.updateRow(this.fields[0].value, i, idName).pipe(mergeMap(()=>{
           return this.tableService.getAllFaculties();
+      }),tap(()=>{
+        this.notCompleted = false;
       }));
       break;
     }

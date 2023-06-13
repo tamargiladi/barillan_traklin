@@ -1,4 +1,5 @@
-<form (ngSubmit)="onSubmit()">
+<div *ngIf="notCompleted; else Completed">
+    <form (ngSubmit)="onSubmit()">
     <div class="form-container-box">
         <div class="form-container" *ngFor="let field of fields">
             <div class="label-container">
@@ -29,3 +30,10 @@
   <div *ngIf="isError" class="error" style="color:red;flex-direction: row;justify-content: center; text-align: center; padding-top: 100px;">
     {{errorMessage}}
   </div> 
+  </div>
+  <ng-template #Completed>
+    <div class="thankyou-page">
+        תודה שנרשמת 🥳
+    </div>
+
+  </ng-template>
