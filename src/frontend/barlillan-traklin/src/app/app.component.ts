@@ -21,7 +21,7 @@ export class AppComponent {
     required: true,
   },
   {
-    label: 'פקולטה',
+    label: 'השתייכות',
     name: 'Faculty',
     type: 'select',
     required: true,
