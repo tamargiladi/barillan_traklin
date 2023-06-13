@@ -1,33 +1,30 @@
-
-
 .form-container-box {
-    background-color: #70C9E9;
-    margin-top: 50px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 25%;
+  background-color: #70c9e9;
+  margin-top: 50px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
 
-    .form-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    
-    
-        .label-container {
-            display:flex;
-            margin: 30px;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
+  .form-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+    .label-container {
+      display: flex;
+      margin: 30px;
+      align-items: center;
+      font-weight: bold;
+      font-size: 18px;
     }
+  }
 }
 
 .thankyou-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    padding-top: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  padding-top: 25%;
 }

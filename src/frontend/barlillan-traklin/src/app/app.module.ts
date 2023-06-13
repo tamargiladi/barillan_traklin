@@ -7,20 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    GenericFormComponent,
-    LoaderComponent,
-    
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-  ],
+  declarations: [AppComponent, GenericFormComponent, LoaderComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
