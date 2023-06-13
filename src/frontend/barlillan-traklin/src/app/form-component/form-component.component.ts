@@ -16,6 +16,7 @@ export class GenericFormComponent {
   errorMessage = '';
   objectFaculties: any;
   notCompleted = true;
+  loading = false;
   constructor(private tableService: TableService) {
     this.tableService.getAllFaculties().subscribe((c)=>{
       let cObj: any = c;
@@ -30,11 +31,16 @@ export class GenericFormComponent {
   onSubmit() {
     this.isError = false;
     let facultyRelevant: any;
+
+    if (this.fields[0].value === '') {
+      this.errorMessage = 'יש להכניס שם מלא\n';
+      this.isError = true;
+    }
     this.objectFaculties.data.forEach((faculty: any) => {
         if (faculty.Name_of_Faculty === this.fields[1]?.value) {
           facultyRelevant = faculty;
           if (faculty.Participant_no_4 !== 'NONE') {
-            this.errorMessage = 'No More capacity for this faculty.';
+            this.errorMessage = 'אין יותר מקום - נא לבחור השתייכות אחרת\n';
             this.isError = true;
           return;
         }
@@ -49,6 +55,7 @@ changeSelect(event: any) {
 }
 
 iterateOver(field: any) {
+  this.loading = true;
   let obs$;
   for (let i = 1; i <= 4; i++) {
     
@@ -58,11 +65,9 @@ iterateOver(field: any) {
           return this.tableService.getAllFaculties();
       }),tap(()=>{
         this.notCompleted = false;
-      }));
+      })); 
       break;
     }
-
-  
   }
 
      (obs$ as never as any).subscribe()

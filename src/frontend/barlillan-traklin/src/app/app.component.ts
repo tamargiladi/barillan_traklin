@@ -19,6 +19,7 @@ export class AppComponent {
     name: 'fullName',
     type: 'text',
     required: true,
+    value: '',
   },
   {
     label: 'השתייכות',

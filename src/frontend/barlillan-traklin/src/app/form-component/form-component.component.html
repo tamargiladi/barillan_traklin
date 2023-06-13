@@ -1,7 +1,9 @@
 <div *ngIf="notCompleted; else Completed">
     <form (ngSubmit)="onSubmit()">
     <div class="form-container-box">
+        
         <div class="form-container" *ngFor="let field of fields">
+            
             <div class="label-container">
                 <label style="padding-right: 20px;">{{ field.label }}</label>
                 <ng-container  *ngIf="field.type !== 'select'">
@@ -23,17 +25,19 @@
             <button style=" margin-top: 30px; padding: 16px; font-size: 28px;font-weight
             :600;background-color: #16313b; border: none;color:white; cursor:pointer;" type="submit">שלח</button>
         </div>
+        <app-loader *ngIf="loading"></app-loader>
     </div>
-  
+    
   </form>
 
-  <div *ngIf="isError" class="error" style="color:red;flex-direction: row;justify-content: center; text-align: center; padding-top: 100px;">
+  <div *ngIf="isError" class="error" style="color:red;flex-direction: row;justify-content: center; text-align: center; padding-top: 100px; font-size: 28px; font-weight: bold;">
     {{errorMessage}}
   </div> 
+  
   </div>
   <ng-template #Completed>
     <div class="thankyou-page">
         תודה שנרשמת 🥳
     </div>
-
   </ng-template>
+  
