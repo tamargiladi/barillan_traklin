@@ -1,11 +1,20 @@
+<div class="header">
+  
+  <img
+
+    src="https://upload.wikimedia.org/wikipedia/he/b/b0/Bar_Ilan_logo.png"
+  />
+  <h1>טופס הרשמה לטרקלין בר אילן</h1>
+</div>
+
 <div *ngIf="notCompleted; else Completed">
   <form (ngSubmit)="onSubmit()">
     <div class="form-container-box">
       <div class="form-container" *ngFor="let field of fields">
         <div class="label-container">
-          <label style="padding-left: 20px">{{ field.label }}</label>
           <ng-container *ngIf="field.type !== 'select'">
             <input
+            [placeholder]="'הכניס/י שם מלא'"
               style="padding: 10px"
               type="{{ field.type }}"
               [name]="field.name"
@@ -22,6 +31,7 @@
               [required]="field.required"
             >
               <option
+                [disabled]="option.disabled"
                 *ngFor="let option of field.options"
                 [value]="option.value"
               >
@@ -32,6 +42,7 @@
           <ng-container *ngIf="field.type === 'radio'">
             <div *ngFor="let option of field.options">
               <input
+                  dir="rtl"
                 type="radio"
                 [name]="field.name"
                 [value]="option.value"
@@ -43,19 +54,10 @@
           </ng-container>
         </div>
       </div>
-      <div style="display: flex; justify-content: center; padding-bottom: 40px">
+      <div style="display: flex; justify-content: center; padding-bottom: 40px; padding-top: 200px;">
         <button
-          style="
-            margin-top: 30px;
-            padding: 16px;
-            font-size: 28px;
-            font-weight: 600;
-            background-color: #16313b;
-            border: none;
-            color: white;
-            cursor: pointer;
-          "
-          type="submit"
+        class="submit-button"
+        type="submit"
         >
           שלח
         </button>
@@ -81,5 +83,5 @@
   </div>
 </div>
 <ng-template #Completed>
-  <div class="thankyou-page">תודה שנרשמת 🥳</div>
+  <div *ngIf="!notCompleted" class="thankyou-page">תודה שנרשמת 🥳</div>
 </ng-template>

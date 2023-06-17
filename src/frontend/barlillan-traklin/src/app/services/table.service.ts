@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class TableService {
   constructor(private httpClient: HttpClient) {}
 
-  params = { tabId: '06/07' };
+  params = { tabId: 'Updated' };
 
   getAllFaculties(): Observable<any> {
     return this.httpClient.get(
@@ -17,11 +17,20 @@ export class TableService {
     );
   }
 
-  updateRow(name: string, no: number, faculty: number): Observable<any> {
-    return this.httpClient.put(
+  addRow(a: [string[]]): Observable<any> {
+    return this.httpClient.post(
       'https://v1.nocodeapi.com/tamargi/google_sheets/JeVDzRGKhnBGYywz',
-      { row_id: faculty, [`Participant_no_${no}`]: name },
+     a,
       { params: this.params }
     );
+  }
+
+  getAllDates(): Observable<any> {
+    return this.httpClient.get('https://v1.nocodeapi.com/tamargi/google_sheets/JeVDzRGKhnBGYywz?tabId=Dates').pipe(map((items: any)=>{
+      return items.data.map((item: any)=> {
+        const { row_id, ...rest} = item;
+        return rest;
+      })
+    }))
   }
 }

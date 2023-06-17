@@ -1,74 +1,74 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { a } from 'src/server/parser.service';
 import { TableService } from '../services/table.service';
 import { mergeMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
+import { FacultyOptions, Field,  } from '../types/types';
 @UntilDestroy()
 @Component({
   selector: 'app-form-component',
   templateUrl: './form-component.component.html',
   styleUrls: ['./form-component.component.scss'],
 })
-export class GenericFormComponent {
+export class GenericFormComponent{
   @Input() fields: Field[] = [];
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
 
   isError: boolean = false;
   errorMessage = '';
-  objectFaculties: any;
+  allData: any;
   notCompleted = true;
   loading = false;
+  loadingPage = false;
   constructor(private tableService: TableService) {
     this.tableService
       .getAllFaculties()
       .pipe(untilDestroyed(this))
       .subscribe((c) => {
-        this.objectFaculties = c;
+        this.allData = c.data;
       });
   }
   onSubmit() {
     this.isError = false;
-    let facultyRelevant: any;
-
+    let facultyRelevant = this.fields[1]?.value
+  
     if (this.fields[0].value === '') {
       this.errorMessage = 'יש להכניס שם מלא\n';
       this.isError = true;
+      return;
     }
-    this.objectFaculties.data.forEach((faculty: any) => {
       if (!this.fields[1]?.value) {
         this.errorMessage = 'נא לבחור השתייכות';
         this.isError = true;
-      } else if (faculty.Name_of_Faculty === this.fields[1]?.value) {
-        facultyRelevant = faculty;
-        if (faculty.Participant_no_4 !== 'NONE') {
-          this.errorMessage = 'אין יותר מקום - נא לבחור השתייכות אחרת\n';
+        return;
+      }
+    
+      else {
+        const selectedDate = this.fields[2].value;
+        const totalInFaculty = this.getFacultyTotal(facultyRelevant, selectedDate).length;
+        if (totalInFaculty >= 4) {
+          this.errorMessage = 'פקולטה זו בתפוסה מלאה. נס/י לבחור תאריך אחר';
           this.isError = true;
           return;
         }
 
-        if (!this.isError) {
+        
           this.iterateOver(facultyRelevant);
-        }
         
       }
-    });
   }
 
   changeSelect(event: any) {
     console.log('event:', event);
   }
 
-  iterateOver(field: any) {
+  iterateOver(field: FacultyOptions) {
     this.loading = true;
+    const nameValue = this.fields[0]?.value;
+    const dateValue = this.fields[2]?.value;
     let obs$;
-    for (let i = 1; i <= 4; i++) {
-      if (field[`Participant_no_${i}`] === 'NONE') {
-        const idName: number = this.getRowIdByNameOfFaculty(
-          field.Name_of_Faculty
-        );
         obs$ = this.tableService
-          .updateRow(this.fields[0].value, i, idName)
+          .addRow([[nameValue, field, dateValue, this.fields[3].value]])
           .pipe(
             untilDestroyed(this),
             mergeMap(() => {
@@ -78,49 +78,17 @@ export class GenericFormComponent {
               this.notCompleted = false;
             })
           );
-        break;
-      }
-    }
-
-    (obs$ as never as any).subscribe();
+    
+    (obs$ as never as any).pipe(untilDestroyed(this)).subscribe();
   }
 
-  private getRowIdByNameOfFaculty(name: string) {
-    switch (name) {
-      case 'Science':
-        return 2;
-      case 'Art':
-        return 3;
-      case 'Engineering':
-        return 4;
-      case 'Judaism':
-        return 5;
-      case 'Social':
-        return 6;
-      case 'Education':
-        return 7;
-      case 'Medicine':
-        return 8;
-      case 'Managment':
-        return 9;
-      case 'Humanities':
-        return 10;
-      default:
-        return -1; // Return -1 for unrecognized faculty names
-    }
+
+  private getFacultyTotal(faculty: string, selectedDate: string): any[] {
+    const filterdData = this.allData.filter((item: any) => {
+      return item.Faculty === faculty && item.Date === selectedDate
+    });
+    return [...filterdData];
   }
 }
 
-interface Field {
-  label: string;
-  name: string;
-  type: string;
-  value?: any;
-  required: boolean;
-  options?: SelectOption[];
-}
 
-interface SelectOption {
-  label: string;
-  value?: any;
-}
