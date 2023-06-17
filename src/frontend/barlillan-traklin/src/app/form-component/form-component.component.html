@@ -3,7 +3,7 @@
     <div class="form-container-box">
       <div class="form-container" *ngFor="let field of fields">
         <div class="label-container">
-          <label style="padding-right: 20px">{{ field.label }}</label>
+          <label style="padding-left: 20px">{{ field.label }}</label>
           <ng-container *ngIf="field.type !== 'select'">
             <input
               style="padding: 10px"
@@ -28,6 +28,18 @@
                 {{ option.label }}
               </option>
             </select>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'radio'">
+            <div *ngFor="let option of field.options">
+              <input
+                type="radio"
+                [name]="field.name"
+                [value]="option.value"
+                [(ngModel)]="field.value"
+                [required]="field.required"
+              >
+              <label>{{ option.label }}</label>
+            </div>
           </ng-container>
         </div>
       </div>

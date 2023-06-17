@@ -54,17 +54,17 @@ export class AppComponent {
           value: 'Medicine',
         },
         {
-          label: 'הנהלה בכירה',
-          value: 'Managment',
-        },
-        {
           label: 'מדעי הרוח',
           value: 'Humanities',
+        },
+        {
+          label: 'הנהלה בכירה',
+          value: 'Managment',
         },
       ],
     },
     {
-      label: 'תאריך ושעה',
+      label: 'מועד המפגש',
       name: 'Time',
       type: 'select',
       required: true,
@@ -74,5 +74,24 @@ export class AppComponent {
         },
       ],
     },
+    {
+      label: 'אקדמי/מנהלי', 
+      type: 'radio',
+      name: 'job',
+      required: true,
+      options: [
+        
+        {
+          label:'aaa',
+          value: ''
+      },
+      {
+        label:'vvv',
+      value: ''
+    }
+      ]
+
+    },
+    
   ];
 }
